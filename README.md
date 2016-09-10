@@ -1,1 +1,1 @@
-# frontend
+Gulp проект для frontend.
