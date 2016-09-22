@@ -1,0 +1,13 @@
+@mixin clearfix {
+	&:after {
+		display: table;
+		clear: both;
+		content: '';
+	}
+}
+
+@mixin Roboto-Light {
+	font-family: 'Roboto-Light';
+	font-weight: normal;
+	font-style: normal;
+}
