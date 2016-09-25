@@ -1,0 +1,69 @@
+$aboutus1-name: 'aboutus1';
+$aboutus1-x: 112px;
+$aboutus1-y: 0px;
+$aboutus1-offset-x: -112px;
+$aboutus1-offset-y: 0px;
+$aboutus1-width: 112px;
+$aboutus1-height: 152px;
+$aboutus1-total-width: 224px;
+$aboutus1-total-height: 161px;
+$aboutus1-image: '../images/sprite.png';
+$aboutus1: (112px, 0px, -112px, 0px, 112px, 152px, 224px, 161px, '../images/sprite.png', 'aboutus1', );
+$aboutus2-name: 'aboutus2';
+$aboutus2-x: 0px;
+$aboutus2-y: 0px;
+$aboutus2-offset-x: 0px;
+$aboutus2-offset-y: 0px;
+$aboutus2-width: 112px;
+$aboutus2-height: 161px;
+$aboutus2-total-width: 224px;
+$aboutus2-total-height: 161px;
+$aboutus2-image: '../images/sprite.png';
+$aboutus2: (0px, 0px, 0px, 0px, 112px, 161px, 224px, 161px, '../images/sprite.png', 'aboutus2', );
+$spritesheet-width: 224px;
+$spritesheet-height: 161px;
+$spritesheet-image: '../images/sprite.png';
+$spritesheet-sprites: ($aboutus1, $aboutus2, );
+$spritesheet: (224px, 161px, '../images/sprite.png', $spritesheet-sprites, );
+
+@mixin sprite-width($sprite) {
+	width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+	height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+	$sprite-offset-x: nth($sprite, 3);
+	$sprite-offset-y: nth($sprite, 4);
+	background-position: $sprite-offset-x $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+	$sprite-image: nth($sprite, 9);
+	background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+
+	@include sprite-image($sprite);
+
+	@include sprite-position($sprite);
+
+	@include sprite-width($sprite);
+
+	@include sprite-height($sprite);
+}
+
+@mixin sprites($sprites) {
+
+	@each $sprite in $sprites {
+		$sprite-name: nth($sprite, 10);
+
+		.#{$sprite-name} {
+
+			@include sprite($sprite);
+		}
+	}
+}

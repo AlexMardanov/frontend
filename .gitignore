@@ -1,0 +1,4 @@
+node_modules/
+essay/
+slicing/*
+!slicing/default/

@@ -34,7 +34,6 @@ template,
 ::before,
 ::after {
 	box-sizing: inherit;
-	background-repeat: no-repeat;
 }
 
 ::before,
@@ -291,4 +290,10 @@ textarea,
 
 [hidden][aria-hidden='false']:focus {
 	clip: auto;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
 }
