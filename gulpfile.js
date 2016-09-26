@@ -2,38 +2,35 @@
 /* ------------------------------------------------------------ */
 /*   PLUGINS   */
 /* ------------------------------------------------------------ */
-const gulp         = require('gulp');
-const browserSync  = require('browser-sync').create();
-const jsmin        = require('gulp-jsmin');
-const rename       = require('gulp-rename');
-const cache        = require('gulp-cache');
-const clean        = require('gulp-clean');
-const runSequence  = require('run-sequence');
-const sass         = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const imagemin     = require('gulp-imagemin');
-const pngquant     = require('imagemin-pngquant');
-const stylefmt     = require('gulp-stylefmt');
-const sourcemaps   = require('gulp-sourcemaps');
-const plumber      = require('gulp-plumber');
-const debug        = require('gulp-debug');
-const notify       = require("gulp-notify");
-const newer        = require("gulp-newer");
-const spritesmith  = require('gulp.spritesmith');
-const changed      = require('gulp-changed');
-const changedInPlace = require('gulp-changed-in-place');
-const sassInheritance = require('gulp-sass-inheritance');
+const gulp             = require('gulp');
+const browserSync      = require('browser-sync').create();
+const jsmin            = require('gulp-jsmin');
+const rename           = require('gulp-rename');
+const cache            = require('gulp-cache');
+const clean            = require('gulp-clean');
+const runSequence      = require('run-sequence');
+const sass             = require('gulp-sass');
+const autoprefixer     = require('gulp-autoprefixer');
+const imagemin         = require('gulp-imagemin');
+const pngquant         = require('imagemin-pngquant');
+const stylefmt         = require('gulp-stylefmt');
+const sourcemaps       = require('gulp-sourcemaps');
+const plumber          = require('gulp-plumber');
+const debug            = require('gulp-debug');
+const notify           = require("gulp-notify");
+const spritesmith      = require('gulp.spritesmith');
 const cached           = require('gulp-cached');
+const partialsImported = require('gulp-sass-partials-imported');
 /* ------------------------------------------------------------ */
 /*   PATH   */
 /* ------------------------------------------------------------ */
-var stylesPath = 'essay/sites/besttermpaper.com/web/styles';
-var jsPath     = 'essay/sites/besttermpaper.com/web/js';
-var imagesPath = 'essay/sites/besttermpaper.com/web/images';
-var fontsPath  = 'essay/sites/besttermpaper.com/web/fonts';
-var htmlPath   = 'essay/sites/besttermpaper.com';
-var distPath   = 'essay/sites/besttermpaper.com/web';
-var siteName   = 'besttermpaper.com';
+var stylesPath = 'static-projects/default/app/styles';  // e.g. 'essay/sites/besttermpaper.com/web/styles' or 'static-projects/sitename/app/styles'
+var jsPath     = 'static-projects/default/app/js';      // e.g. 'essay/sites/besttermpaper.com/web/js' or 'static-projects/sitename/app/js'
+var imagesPath = 'static-projects/default/app/images';  // e.g. 'essay/sites/besttermpaper.com/web/images' or 'static-projects/sitename/app/images'
+var fontsPath  = 'static-projects/default/app/fonts';   // e.g. 'essay/sites/besttermpaper.com/web/fonts' or 'static-projects/sitename/app/fonts'
+var htmlPath   = 'static-projects/default/app';         // e.g. 'essay/sites/besttermpaper.com' or 'static-projects/sitename/app'
+var distPath   = 'static-projects/default/dist';        // e.g. 'essay/sites/besttermpaper.com/web' or 'static-projects/sitename/dist'
+var siteName   = 'besttermpaper.com';                   // e.g. 'besttermpaper.com'
 /* ------------------------------------------------------------ */
 /*   GULP   */
 /* ------------------------------------------------------------ */
@@ -51,10 +48,10 @@ gulp.task('local-server', function() {
 		proxy: 'http://'+siteName+'.local'
 	});
 });
-gulp.task('default', ['stylefmt', 'local-server'], function() {
+gulp.task('default', ['stylefmt', 'static-server'], function() {
 	gulp.watch(stylesPath+'/**/*.scss', ['styles']);
 	gulp.watch(jsPath+'/**/*.js', ['js']);
-	gulp.watch(htmlPath+'**/*.{php,js,tpl}').on('change', browserSync.reload);
+	gulp.watch(htmlPath+'**/*.{php,js,tpl,html}').on('change', browserSync.reload);
 	gulp.watch(imagesPath+'/sprites/*.*', ['sprite']);
 });
 /* ------------------------------------------------------------ */
@@ -62,21 +59,22 @@ gulp.task('default', ['stylefmt', 'local-server'], function() {
 /* ------------------------------------------------------------ */
 gulp.task('styles', function() {
 	return gulp.src(stylesPath+'/**/*.scss')
-		.pipe(cached('styling'))
+		.pipe(cached('scss-files'))
+		.pipe(partialsImported(stylesPath))
 		.pipe(sourcemaps.init())
 		.pipe(sass({
-			outputStyle: 'compact',
+			outputStyle: 'compressed',
 			includePaths: ['node_modules/susy/sass']
 		}))
 		.on('error', notify.onError())
 		.pipe(autoprefixer({
 			browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'] }))
-		.pipe(sourcemaps.write('sourcemaps', {includeContent: false}))
+		.pipe(sourcemaps.write('sourcemaps'))
 		.pipe(gulp.dest(stylesPath))
 		.pipe(browserSync.stream({match: '**/*.css'}));
 });
 gulp.task('stylefmt', function() {
-	return gulp.src([stylesPath+'/**/*.scss', '!**/*.main.scss'])
+	return gulp.src([stylesPath+'/**/*.scss', '!**/main.scss'])
 		.pipe(stylefmt())
 		.pipe(gulp.dest(stylesPath));
 });
@@ -87,7 +85,7 @@ gulp.task('build-styles', ['stylefmt'], function() {
 /* ------------------------------------------------------------ */
 /*   IMAGES   */
 /* ------------------------------------------------------------ */
-gulp.task('build-images', ['sprite'], function() {
+gulp.task('images', ['sprite'], function() {
 	return gulp.src(imagesPath+'/**/*.{png,gif,jpg,jpeg,svg}')
 		.pipe(cache(imagemin({
 			interlaced: true,
@@ -151,7 +149,7 @@ gulp.task('build-fonts', function () {
 /* ------------------------------------------------------------ */
 /*   BUILD   */
 /* ------------------------------------------------------------ */
-gulp.task('build-dist', ['build-styles', 'build-js', 'build-images', 'build-html', 'build-fonts'], function(callback) {
+gulp.task('build-dist', ['build-styles', 'build-js', 'images', 'build-html', 'build-fonts'], function(callback) {
 	callback();
 });
 gulp.task('clean-dist', function () {

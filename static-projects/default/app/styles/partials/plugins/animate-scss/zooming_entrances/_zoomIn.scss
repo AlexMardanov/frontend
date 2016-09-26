@@ -1,0 +1,18 @@
+@mixin zoomIn($name: zoomIn, $duration: $an-duration, $delay: $an-delay, $iterations: $an-iterations) {
+
+	@include an-props($name, $duration, $delay, $iterations);
+
+	@at-root {
+
+		@keyframes zoomIn {
+			0% {
+				opacity: 0;
+				transform: scale3d(0.3, 0.3, 0.3);
+			}
+
+			50% {
+				opacity: 1;
+			}
+		}
+	}
+}
