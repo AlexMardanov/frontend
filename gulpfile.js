@@ -24,12 +24,12 @@ const partialsImported = require('gulp-sass-partials-imported');
 /* ------------------------------------------------------------ */
 /*   PATH   */
 /* ------------------------------------------------------------ */
-var stylesPath = 'static-projects/default/app/styles';  // e.g. 'essay/sites/besttermpaper.com/web/styles' or 'static-projects/sitename/app/styles'
-var jsPath     = 'static-projects/default/app/js';      // e.g. 'essay/sites/besttermpaper.com/web/js' or 'static-projects/sitename/app/js'
-var imagesPath = 'static-projects/default/app/images';  // e.g. 'essay/sites/besttermpaper.com/web/images' or 'static-projects/sitename/app/images'
-var fontsPath  = 'static-projects/default/app/fonts';   // e.g. 'essay/sites/besttermpaper.com/web/fonts' or 'static-projects/sitename/app/fonts'
-var htmlPath   = 'static-projects/default/app';         // e.g. 'essay/sites/besttermpaper.com' or 'static-projects/sitename/app'
-var distPath   = 'static-projects/default/dist';        // e.g. 'essay/sites/besttermpaper.com/web' or 'static-projects/sitename/dist'
+var stylesPath = 'static-projects/sitename/app/styles';  // e.g. 'essay/sites/besttermpaper.com/web/styles' or 'static-projects/sitename/app/styles'
+var jsPath     = 'static-projects/sitename/app/js';      // e.g. 'essay/sites/besttermpaper.com/web/js' or 'static-projects/sitename/app/js'
+var imagesPath = 'static-projects/sitename/app/images';  // e.g. 'essay/sites/besttermpaper.com/web/images' or 'static-projects/sitename/app/images'
+var fontsPath  = 'static-projects/sitename/app/fonts';   // e.g. 'essay/sites/besttermpaper.com/web/fonts' or 'static-projects/sitename/app/fonts'
+var htmlPath   = 'static-projects/sitename/app';         // e.g. 'essay/sites/besttermpaper.com' or 'static-projects/sitename/app'
+var distPath   = 'static-projects/sitename/dist';        // e.g. 'essay/sites/besttermpaper.com/web' or 'static-projects/sitename/dist'
 var siteName   = 'besttermpaper.com';                   // e.g. 'besttermpaper.com'
 /* ------------------------------------------------------------ */
 /*   GULP   */
@@ -41,14 +41,14 @@ gulp.task('static-server', function() {
 });
 gulp.task('local-server', function() {
 	return browserSync.init({
-		tunnel: true,
-		port: 9000,
+		tunnel: 'devellar',
+		port: 3001,
 		host: siteName+'.local',
 		logPrefix: "Frontend_Devellar",
 		proxy: 'http://'+siteName+'.local'
 	});
 });
-gulp.task('default', ['stylefmt', 'static-server'], function() {
+gulp.task('default', ['stylefmt', 'local-server'], function() {
 	gulp.watch(stylesPath+'/**/*.scss', ['styles']);
 	gulp.watch(jsPath+'/**/*.js', ['js']);
 	gulp.watch(htmlPath+'**/*.{php,js,tpl,html}').on('change', browserSync.reload);

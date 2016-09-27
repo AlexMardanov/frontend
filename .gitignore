@@ -1,4 +1,8 @@
 node_modules/
 essay/
-slicing/*
-!slicing/default/
+static-projects/**
+!static-projects/default/
+!static-projects/emails/
+static-projects/emails/node_modules
+static-projects/emails/projects/**
+!static-projects/emails/projects/default
