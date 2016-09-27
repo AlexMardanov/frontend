@@ -11,6 +11,7 @@
 <p>В <strong>gulpfile.js</strong> меняем пути на свои в разделе <strong>PATH</strong> (пример в комментариях).</p>
 <p>Проверяем, чтобы в <strong>default</strong> таске стоял <strong>local-server</strong>.</p>
 <p>Пишем в консоле <strong>gulp</strong> и имплементируем :)</p>
+<p>Перед началом можно сжать все картинки в проекте <strong>gulp images</strong></p>
 <h3>Фичи:</h3>
 <details>
 <summary>Многа букаф!</summary>
