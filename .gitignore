@@ -1,8 +1,8 @@
-node_modules/
-essay/
-static-projects/**
-!static-projects/default/
-!static-projects/emails/
-static-projects/emails/node_modules
-static-projects/emails/projects/**
-!static-projects/emails/projects/default
+/node_modules/
+/essay/
+/static-projects/*
+!/static-projects/default/
+!/static-projects/emails/
+/static-projects/emails/node_modules/
+/static-projects/emails/projects/*
+!/static-projects/emails/projects/default

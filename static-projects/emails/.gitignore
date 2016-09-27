@@ -1,7 +1,0 @@
-node_modules/
-projects/**
-!/projects/default/
-build
-.DS_Store
-styles.css
-.idea

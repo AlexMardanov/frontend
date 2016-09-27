@@ -1,0 +1,28 @@
+{% macro msoStart(tableWidth, valign, tdWidth, style) %}
+    <!--[if (gte mso 9)|(IE)]>
+    <table width="{{ tableWidth }}" align="center">
+    <tr>
+    <td valign="{{ valign }}" width="{{ tdWidth }}" style="{{ style }}">
+    <![endif]-->
+{% endmacro %}
+
+{% macro msoSep(valign, tdWidth, style) %}
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    <td valign="{{ valign }}" width="{{ tdWidth }}" style="{{ style }}">
+    <![endif]-->
+{% endmacro %}
+
+{% macro msoEnd() %}
+    <!--[if (gte mso 9)|(IE)]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+{% endmacro %}
+
+{% macro button(href, text) %}
+    {{ msoStart('auto', 'top', 'auto', 'padding:10px 30px; background-color:#3399ff;') }}
+    <a class="button" href="{{ href }}" target="_blank"><span>{{ text }}</span></a>
+    {{ msoEnd() }}
+{% endmacro %}
