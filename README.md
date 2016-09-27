@@ -1,3 +1,6 @@
+<style>
+*:focus { outline: none; }
+</style>
 <h1>Gulp проект для frontend</h1>
 <p>Качаем архив, распаковываем в папку на уровень выше от папки <strong>essay</strong>.</p>
 <p>Если не установлен gulp, то устанавливаем: открываем консоль в нашей папке (там, где лежит файл <strong>gulpfile.js</strong>) и пишем: <strong>npm i --global gulp</strong>. Консоль не закрываем.</p>
