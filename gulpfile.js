@@ -24,12 +24,12 @@ const partialsImported = require('gulp-sass-partials-imported');
 /* ------------------------------------------------------------ */
 /*   PATH   */
 /* ------------------------------------------------------------ */
-var stylesPath = 'static-projects/sitename/app/styles';  // e.g. 'essay/sites/besttermpaper.com/web/styles' or 'static-projects/sitename/app/styles'
-var jsPath     = 'static-projects/sitename/app/js';      // e.g. 'essay/sites/besttermpaper.com/web/js' or 'static-projects/sitename/app/js'
-var imagesPath = 'static-projects/sitename/app/images';  // e.g. 'essay/sites/besttermpaper.com/web/images' or 'static-projects/sitename/app/images'
-var fontsPath  = 'static-projects/sitename/app/fonts';   // e.g. 'essay/sites/besttermpaper.com/web/fonts' or 'static-projects/sitename/app/fonts'
-var htmlPath   = 'static-projects/sitename/app';         // e.g. 'essay/sites/besttermpaper.com' or 'static-projects/sitename/app'
-var distPath   = 'static-projects/sitename/dist';        // e.g. 'essay/sites/besttermpaper.com/web' or 'static-projects/sitename/dist'
+var stylesPath = 'essay/sites/besttermpaper.com/web/styles';  // e.g. 'essay/sites/besttermpaper.com/web/styles' or 'static-projects/sitename/app/styles'
+var jsPath     = 'essay/sites/besttermpaper.com/web/js';      // e.g. 'essay/sites/besttermpaper.com/web/js' or 'static-projects/sitename/app/js'
+var imagesPath = 'essay/sites/besttermpaper.com/web/images';  // e.g. 'essay/sites/besttermpaper.com/web/images' or 'static-projects/sitename/app/images'
+var fontsPath  = 'essay/sites/besttermpaper.com/web/fonts';   // e.g. 'essay/sites/besttermpaper.com/web/fonts' or 'static-projects/sitename/app/fonts'
+var htmlPath   = 'essay/sites/besttermpaper.com';         // e.g. 'essay/sites/besttermpaper.com' or 'static-projects/sitename/app'
+var distPath   = 'essay/sites/besttermpaper.com/web';        // e.g. 'essay/sites/besttermpaper.com/web' or 'static-projects/sitename/dist'
 var siteName   = 'besttermpaper.com';                   // e.g. 'besttermpaper.com'
 /* ------------------------------------------------------------ */
 /*   GULP   */
@@ -49,7 +49,7 @@ gulp.task('local-server', function() {
 	});
 });
 gulp.task('default', ['stylefmt', 'local-server'], function() {
-	gulp.watch(stylesPath+'/**/*.scss', ['styles']);
+	gulp.watch(stylesPath+'/**/*.css', ['css']);
 	gulp.watch(jsPath+'/**/*.js', ['js']);
 	gulp.watch(htmlPath+'**/*.{php,js,tpl,html}').on('change', browserSync.reload);
 	gulp.watch(imagesPath+'/sprites/*.*', ['sprite']);
@@ -73,8 +73,17 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest(stylesPath))
 		.pipe(browserSync.stream({match: '**/*.css'}));
 });
+gulp.task('css', function() {
+	return gulp.src(stylesPath+'/**/*.css')
+		.pipe(cached('css-files'))
+		.pipe(autoprefixer({
+			browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'] }))
+		.on('error', notify.onError())
+		.pipe(gulp.dest(stylesPath))
+		.pipe(browserSync.stream({match: '**/*.css'}));
+});
 gulp.task('stylefmt', function() {
-	return gulp.src([stylesPath+'/**/*.scss', '!**/main.scss'])
+	return gulp.src(stylesPath+'/**/*.scss')
 		.pipe(stylefmt())
 		.pipe(gulp.dest(stylesPath));
 });
