@@ -28,7 +28,7 @@
 <li>Подключена сетка <strong>Susy</strong>. Настройки в переменной <strong>$susy</strong> в <strong>app/styles/partials/vars/_vars.scss</strong>. Коротко - для враппера пишем <strong>@include container;</strong>, а для блоков количество колонок <strong>@include span(12);</strong>. В инете можно почитать подробней.</li>
 <li>Дальше работа с сассом - миксины, переменные и тд, кто что хочет. Если не хочет - пишет простой цсс в файле .scss и не заморачивается :)</li>
 <li>При добавлении картинок в папку <strong>app/images/sprites</strong> сгенерируется спрайт <strong>sprite.png</strong> в папке <strong>images</strong> и создастся файл <strong>_sprite.scss</strong> в папке с миксинами. Теперь можно в наших файлах инклудить спрайты через <strong>@include sprite($img_name)</strong>.</li>
-<li>Т.к. таск с обработкой картинок самый затратный по времени, то он запускается отдельно или при билде. Можно запустить <strong>gulp images</strong> - сжатые файлы появятся в папке <strong>dist/images</strong>. Или же просто в конце работы запустить <strong>gulp build-dist</strong> - ваш готовый проект будет создан в папке <strong>dist</strong>.</li>
+<li>Т.к. таск с обработкой картинок самый затратный по времени, то он запускается отдельно или при билде. Можно запустить <strong>gulp images</strong> - сжатые файлы появятся в папке <strong>dist/images</strong>. Или же просто в конце работы запустить <strong>gulp build</strong> - ваш готовый проект будет создан в папке <strong>dist</strong>.</li>
 <li>Если что-то не меняется - попробуйте запустить <strong>gulp clear-cache</strong></li>
 </ol>
 </details>
@@ -39,7 +39,7 @@
 <strong>static-projects</strong> - папка с статическими проэктами на верстку;<br>
 <strong>static-projects/default</strong> - шаблон для работы, копируем, переименовываем и работаем в ней, лишнее при желании удаляем или добавляем, что нужно;<br>
 <strong>static-projects/default/app</strong> - папка с рабочей версией задачи;<br>
-<strong>static-projects/default/dist</strong> - готовый проэкт;<br>
+<strong>static-projects/default/dist</strong> - готовый проект;<br>
 <strong>static-projects/default/app/fonts</strong> - сконверченные шрифты;<br>
 <strong>static-projects/default/app/images</strong> - все фотки;<br>
 <strong>static-projects/default/app/images/sprites</strong> - иконки и кнопки, которые можно заспрайтить, аккуратно с названиями, чтобы не создать конфликты с переменными, не начинать с цифры и без пробелом;<br>
@@ -48,7 +48,7 @@
 <strong>static-projects/default/app/styles/main.scss</strong> - основной файл для компиляции, в нем подключаем партиалы или удаляем при желании лишние (хотя ничего лишнего, кроме ресета не скомпилится с текущими настройками);<br>
 <strong>static-projects/default/app/styles/main.css</strong> - скомпиленный файл стилей, минифицированный и готовый для подключения в html файл;<br>
 <strong>static-projects/default/app/styles/sourcemaps</strong> - сорсы для дебагинга стилей, работает не точно из-за префиксов и из-за вложенностей, но показывает файл, где нужный нам код;<br>
-<strong>static-projects/default/app/styles/partials</strong> - партиалы, файлы вида с _*.scss, которые не компилятся, а только инклудятся в main.scss;<br>
+<strong>static-projects/default/app/styles/partials</strong> - партиалы, файлы вида _*.scss, которые не компилятся, а только инклудятся в main.scss;<br>
 <strong>static-projects/default/app/styles/partials/base:</strong><br>
 <strong>_fonts.scss</strong> - копируем содержимое сконверченного файлы и правим пути;<br>
 <strong>_header.scss, _footer.scss, _sidebar.scss, _main.scss</strong> - основные блоки страниц, удобно переносить частями (футер+шапка, потом остальное);<br>
