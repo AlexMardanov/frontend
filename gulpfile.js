@@ -78,7 +78,7 @@ gulp.task('stylefmt', function() {
 		.pipe(stylefmt())
 		.pipe(gulp.dest(stylesPath));
 });
-gulp.task('build-styles', ['stylefmt'], function() {
+gulp.task('build-styles', ['stylefmt', 'styles'], function() {
 	return gulp.src(stylesPath+'/**/*.*')
 			.pipe(gulp.dest(distPath+'/styles'));
 });
