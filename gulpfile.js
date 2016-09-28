@@ -57,7 +57,7 @@ gulp.task('default', ['stylefmt', 'local-server'], function() {
 /* ------------------------------------------------------------ */
 /*   CSS   */
 /* ------------------------------------------------------------ */
-gulp.task('styles', function() {
+gulp.task('scss', function() {
 	return gulp.src(stylesPath+'/**/*.scss')
 		.pipe(cached('scss-files'))
 		.pipe(partialsImported(stylesPath))
@@ -87,7 +87,7 @@ gulp.task('stylefmt', function() {
 		.pipe(stylefmt())
 		.pipe(gulp.dest(stylesPath));
 });
-gulp.task('build-styles', ['stylefmt', 'styles'], function() {
+gulp.task('build-styles', ['stylefmt', 'scss'], function() {
 	return gulp.src(stylesPath+'/**/*.*')
 			.pipe(gulp.dest(distPath+'/styles'));
 });
