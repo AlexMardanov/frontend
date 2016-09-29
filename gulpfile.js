@@ -52,7 +52,7 @@ gulp.task('default', ['stylefmt', 'local-server'], function() {
 	gulp.watch(stylesPath+'/**/*.css', ['css']);
 	gulp.watch(jsPath+'/**/*.js', ['js']);
 	gulp.watch(htmlPath+'**/*.{php,js,tpl,html}').on('change', browserSync.reload);
-	gulp.watch(imagesPath+'/sprites/*.*', ['sprite']);
+	gulp.watch(imagesPath+'/sprite-items/*.*', ['sprite']);
 });
 /* ------------------------------------------------------------ */
 /*   CSS   */
@@ -105,7 +105,7 @@ gulp.task('images', ['sprite'], function() {
 		.pipe(gulp.dest(distPath+'/images'));
 });
 gulp.task('sprite', function (callback) {
-	var spriteData = gulp.src(imagesPath+'/sprites/*.{png,gif,jpg,jpeg,svg}')
+	var spriteData = gulp.src(imagesPath+'/sprite-items/*.{png,gif,jpg,jpeg,svg}')
 		.pipe(spritesmith({
 				imgName: '../images/sprite.png',
 				cssName: '_sprite.scss',
