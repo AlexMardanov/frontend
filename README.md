@@ -28,7 +28,7 @@
 <li>Подключен плагин <strong>animate.css</strong> - для нужного класса пишем <strong>@include bounce;</strong> и будет сгенерирована анимация с кейфреймами только для этого эффекта, ничего лишнего!</li>
 <li>Подключена сетка <strong>Susy</strong>. Настройки в переменной <strong>$susy</strong> в <strong>app/styles/partials/vars/_vars.scss</strong>. Коротко - для враппера пишем <strong>@include container;</strong>, а для блоков количество колонок <strong>@include span(12);</strong>. В инете можно почитать подробней.</li>
 <li>Дальше работа с сассом - миксины, переменные и тд, кто что хочет. Если не хочет - пишет простой цсс в файле .scss и не заморачивается :)</li>
-<li>При добавлении картинок в папку <strong>app/images/sprites</strong> сгенерируется спрайт <strong>sprite.png</strong> в папке <strong>images</strong> и создастся файл <strong>_sprite.scss</strong> в папке с миксинами. Теперь можно в наших файлах инклудить спрайты через <strong>@include sprite($img_name)</strong>.</li>
+<li>При добавлении картинок в папку <strong>app/images/sprite-items</strong> сгенерируется спрайт <strong>sprite.png</strong> в папке <strong>images</strong> и создастся файл <strong>_sprite.scss</strong> в папке с миксинами. Теперь можно в наших файлах инклудить спрайты через <strong>@include sprite($img_name)</strong>.</li>
 <li>Т.к. таск с обработкой картинок самый затратный по времени, то он запускается отдельно или при билде. Можно запустить <strong>gulp images</strong> - сжатые файлы появятся в папке <strong>dist/images</strong>. Или же просто в конце работы запустить <strong>gulp build</strong> - ваш готовый проект будет создан в папке <strong>dist</strong>.</li>
 <li>Если что-то не меняется - попробуйте запустить <strong>gulp clear-cache</strong></li>
 </ol>
@@ -43,7 +43,7 @@
 <strong>static-projects/default/dist</strong> - готовый проект;<br>
 <strong>static-projects/default/app/fonts</strong> - сконверченные шрифты;<br>
 <strong>static-projects/default/app/images</strong> - все фотки;<br>
-<strong>static-projects/default/app/images/sprites</strong> - иконки и кнопки, которые можно заспрайтить, аккуратно с названиями, чтобы не создать конфликты с переменными, не начинать с цифры и без пробелом;<br>
+<strong>static-projects/default/app/images/sprite-items</strong> - иконки и кнопки, которые можно заспрайтить, аккуратно с названиями, чтобы не создать конфликты с переменными, не начинать с цифры и без пробелом;<br>
 <strong>static-projects/default/app/js</strong> - скрипты, сторонние библиотеки можно группировать по папкам, минификация будет работать и в подкаталогах;<br>
 <strong>static-projects/default/app/styles</strong> - папка стилей;<br>
 <strong>static-projects/default/app/styles/main.scss</strong> - основной файл для компиляции, в нем подключаем партиалы или удаляем при желании лишние (хотя ничего лишнего, кроме ресета не скомпилится с текущими настройками);<br>
