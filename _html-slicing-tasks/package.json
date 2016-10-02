@@ -1,0 +1,30 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Gulp project for frontend developing",
+  "author": "Mardanov Aleksandr",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.15.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-cached": "^1.1.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-debug": "^2.1.2",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-jsmin": "^0.1.5",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sass-partials-imported": "^1.0.4",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylefmt": "^1.0.0",
+    "gulp.spritesmith": "^6.2.1",
+    "imagemin-pngquant": "^5.0.0",
+    "run-sequence": "^1.2.2",
+    "susy": "^2.2.12"
+  },
+  "dependencies": {}
+}

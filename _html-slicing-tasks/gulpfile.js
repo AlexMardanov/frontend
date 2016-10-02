@@ -1,9 +1,9 @@
 'use strict';
 /* ------------------------------------------------------------ */
-/*   ENTER YOUR SITE FOLDER NAME FROM ESSAY/SITES FOLDER   */
-/*          BASIK AND ONLY REQUARED VARIABLE!!!            */
+/*   ENTER YOUR FOLDER NAME FROM _TASKS FOLDER      */
+/*       BASIK AND ONLY REQUARED VARIABLE!!!        */
 /* ------------------------------------------------------------ */
-var folderName = 'superiorpapers.com';
+var folderName = 'essay-666666'; // or any other name of folder copied from default
 /* ------------------------------------------------------------ */
 /*   PLUGINS   */
 /* ------------------------------------------------------------ */
@@ -27,13 +27,14 @@ const spritesmith      = require('gulp.spritesmith');
 const cached           = require('gulp-cached');
 const partialsImported = require('gulp-sass-partials-imported');
 /* ------------------------------------------------------------ */
-/*   PATH (WRITE CORRECT PATHES FOR SPEED UP)   */
+/*   PATHES   */
 /* ------------------------------------------------------------ */
-var stylesPath = 'essay/sites/'+folderName+'/web/styles';
-var jsPath     = 'essay/sites/'+folderName+'/web/js';
-var imagesPath = 'essay/sites/'+folderName+'/web/images';
-var distPath   = 'essay/sites/'+folderName;
-var siteName   = folderName;
+var stylesPath = '_tasks/'+folderName+'/app/styles';
+var jsPath     = '_tasks/'+folderName+'/app/js';
+var imagesPath = '_tasks/'+folderName+'/app/images';
+var fontsPath  = '_tasks/'+folderName+'/app/fonts';
+var htmlPath   = '_tasks/'+folderName+'/app';
+var distPath   = '_tasks/'+folderName+'/dist';
 /* ------------------------------------------------------------ */
 /*   CSS   */
 /* ------------------------------------------------------------ */
@@ -49,7 +50,7 @@ gulp.task('scss', function() {
 		.on('error', notify.onError())
 		.pipe(autoprefixer({
 			browsers: ['last 2 version', 'safari 5', 'ios 6', 'android 4'] }))
-		.pipe(sourcemaps.write('sourcemaps', {includeContent: false}))
+		.pipe(sourcemaps.write('sourcemaps'))
 		.pipe(gulp.dest(stylesPath))
 });
 
@@ -57,6 +58,11 @@ gulp.task('stylefmt', function() {
 	return gulp.src(stylesPath+'/**/*.scss')
 		.pipe(stylefmt())
 		.pipe(gulp.dest(stylesPath));
+});
+
+gulp.task('build-styles', ['stylefmt', 'scss'], function() {
+	return gulp.src(stylesPath+'/**/*.*')
+			.pipe(gulp.dest(distPath+'/styles'));
 });
 /* ------------------------------------------------------------ */
 /*   IMAGES   */
@@ -69,7 +75,7 @@ gulp.task('images', ['sprite'], function() {
 			svgoPlugins: [{removeViewBox: false}],
 			use: [pngquant()]
 		})))
-		.pipe(gulp.dest(imagesPath));
+		.pipe(gulp.dest(distPath+'/images'));
 });
 
 gulp.task('sprite', function (callback) {
@@ -86,13 +92,23 @@ gulp.task('sprite', function (callback) {
 /* ------------------------------------------------------------ */
 /*   JS   */
 /* ------------------------------------------------------------ */
-gulp.task('js', function() {
+gulp.task('minimize-js', function() {
 	return gulp.src(jsPath+'/source-js/*.js')
 		.pipe(cache(jsmin()))
 		.pipe(rename({
 			suffix: '.min'
 		}))
 		.pipe(gulp.dest(jsPath+'/minimized-js'));
+});
+
+gulp.task('js', ['minimize-js'], function(callback) {
+	browserSync.reload();
+	callback();
+});
+
+gulp.task('build-js', ['minimize-js'], function () {
+	return gulp.src(jsPath+'/**/*.*')
+		.pipe(gulp.dest(distPath+'/js'));
 });
 /* ------------------------------------------------------------ */
 /*   CACHE   */
@@ -102,38 +118,57 @@ gulp.task('clear-cache', function () {
 	delete cache.caches['styling'];
 });
 /* ------------------------------------------------------------ */
+/*   HTML   */
+/* ------------------------------------------------------------ */
+gulp.task('build-html', function () {
+	return gulp.src(htmlPath+'/*.html')
+		.pipe(gulp.dest(distPath));
+});
+/* ------------------------------------------------------------ */
+/*   FONTS   */
+/* ------------------------------------------------------------ */
+gulp.task('build-fonts', function () {
+	return gulp.src(fontsPath+'/**/*.*')
+		.pipe(gulp.dest(distPath+'/fonts'));
+});
+/* ------------------------------------------------------------ */
+/*   BUILD   */
+/* ------------------------------------------------------------ */
+gulp.task('build-dist', ['build-styles', 'build-js', 'images', 'build-html', 'build-fonts'], function(callback) {
+	callback();
+});
+
+gulp.task('clean-dist', function () {
+	return gulp.src(distPath, {read: false})
+		.pipe(clean());
+});
+
+gulp.task('build', function (callback) {
+	runSequence('clean-dist', 'build-dist', callback);
+});
+/* ------------------------------------------------------------ */
 /*   GULP   */
 /* ------------------------------------------------------------ */
-gulp.task('local-server', function() {
-	return browserSync.init({
-		tunnel: 'devellar',
-		port: 3001,
-		host: siteName+'.local',
-		logPrefix: "Frontend_Devellar",
-		proxy: 'http://'+siteName+'.local'
+gulp.task('static-server', function() {
+	browserSync.init({
+		server: { baseDir: htmlPath }
 	});
 });
 
-gulp.task('default', ['stylefmt', 'local-server'], function() {
+gulp.task('default', ['stylefmt', 'static-server'], function() {
 	gulp.watch(stylesPath+'/**/*.scss', ['scss']);
 	gulp.watch(jsPath+'/source-js/*.js', ['js']);
 	gulp.watch(imagesPath+'/sprite-items/*.*', ['sprite']);
 
-	browserSync.watch(distPath+'/web/**/*.css', function (event, file) {
+	browserSync.watch(htmlPath+'/**/*.html', function (event, file) {
+		if (event === "change") {
+			browserSync.reload();
+		}
+	});
+
+	browserSync.watch(stylesPath+'/**/*.css', function (event, file) {
 		if (event === "change") {
 			browserSync.reload('*.css');
-		}
-	});
-
-	browserSync.watch(distPath+'/web/**/*.js', function (event, file) {
-		if (event === "change") {
-			browserSync.reload('*.js');
-		}
-	});
-
-	browserSync.watch(distPath+'/template/*.php', function (event, file) {
-		if (event === "change") {
-				browserSync.reload();
 		}
 	});
 });
