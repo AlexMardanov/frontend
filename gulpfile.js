@@ -3,7 +3,7 @@
 /*   ENTER YOUR SITE FOLDER NAME FROM ESSAY/SITES FOLDER   */
 /*          BASIK AND ONLY REQUARED VARIABLE!!!            */
 /* ------------------------------------------------------------ */
-var folderName = 'superiorpapers.com';
+var folderName = 'uk.superiorpapers.com';
 /* ------------------------------------------------------------ */
 /*   PLUGINS   */
 /* ------------------------------------------------------------ */
@@ -106,7 +106,7 @@ gulp.task('clear-cache', function () {
 /* ------------------------------------------------------------ */
 gulp.task('local-server', function() {
 	return browserSync.init({
-		tunnel: 'devellar',
+		// tunnel: 'devellar',
 		port: 3001,
 		host: siteName+'.local',
 		logPrefix: "Frontend_Devellar",

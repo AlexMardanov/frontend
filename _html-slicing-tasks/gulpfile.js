@@ -3,7 +3,7 @@
 /*   ENTER YOUR FOLDER NAME FROM _TASKS FOLDER      */
 /*       BASIK AND ONLY REQUARED VARIABLE!!!        */
 /* ------------------------------------------------------------ */
-var folderName = 'essay-666666'; // or any other name of folder copied from default
+var folderName = 'default'; // or any other name of folder copied from default
 /* ------------------------------------------------------------ */
 /*   PLUGINS   */
 /* ------------------------------------------------------------ */
